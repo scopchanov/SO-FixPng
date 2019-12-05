@@ -32,15 +32,18 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 	setCentralWidget(new QPushButton(tr("Fix Image"), this));
 
-	connect(static_cast<QPushButton *>(centralWidget()), &QPushButton::clicked, [this](){
-		QString fileNameIn(QFileDialog::getOpenFileName(this, tr("Select Image"), ".", "*.png"));
+	connect(static_cast<QPushButton *>(centralWidget()),
+			&QPushButton::clicked, [this](){
+		const QString &fileNameIn(QFileDialog::getOpenFileName(
+									  this, tr("Select Image"), ".", "*.png"));
 
 		if (fileNameIn.isEmpty())
 			return;
 
-		QString fileNameOut(QFileDialog::getSaveFileName(this, tr("Save Image As..."),
-														 fileNameIn.replace(".png", "_fixed.png"),
-														 "*.png"));
+		const QString &fileNameOut(QFileDialog::getSaveFileName(
+									   this, tr("Save Image As..."),
+									   QString(fileNameIn).replace(
+										   ".png", "_fixed.png"), "*.png"));
 
 		if (fileNameOut.isEmpty())
 			return;
